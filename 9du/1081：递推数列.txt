@@ -1,0 +1,15 @@
+#include<stdio.h>
+int main()
+{
+	int p,q,k,a,b,c,i;
+	while(scanf("%d%d%d%d%d",&a,&b,&p,&q,&k)!=EOF)
+	{
+		for(i=2;i<=k;i++)
+		{
+			c=p*b+q*a;
+			a=b;b=c;
+		}
+		printf("%d\n",c%10000);
+	}
+	return 0;
+}

@@ -1,0 +1,53 @@
+//建议还是静态分配。。。否则太容易出错了
+
+#include <stdio.h>
+#include <algorithm>
+#include <math.h>
+#define N 10001
+using namespace std;
+struct bittree{
+	struct bittree *lch,*rch;
+	int date;
+}tree[101];
+int loc;
+bittree* create(int a){
+	bittree* t;
+	t=&tree[loc];
+	tree[loc].date=a;
+	tree[loc].lch=tree[loc].rch=NULL;
+	loc++;
+	return t;
+};
+bittree * insert(int a,bittree *t,bittree *pre){
+	if(t==NULL){
+		bittree *s;
+		s=create(a);
+		if(pre==NULL) printf("-1\n");
+		else printf("%d\n",pre->date);
+		return s;
+	}
+	else if(a>t->date){
+		t->rch=insert(a,t->rch,t);
+	}
+	else if(a<t->date){
+		t->lch=insert(a,t->lch,t);
+	}
+	else;
+	return t;
+}
+int main()
+{
+	int n,a;
+	bittree *T,*pre;
+	while(scanf("%d",&n)!=EOF && n!=0)
+	{
+		loc=0;
+		T=NULL;pre=NULL;
+		while(n>0){
+			scanf("%d",&a);
+			T=insert(a,T,pre);
+			n--;
+		}
+	}
+	return 0;
+}

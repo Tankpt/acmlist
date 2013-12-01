@@ -1,0 +1,31 @@
+1 10
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+int main(int argc, char *argv[])
+{
+	int a,n,i,sum[102],cin,j;//由低位向高位进位【0】低位
+	while(scanf("%d%d",&a,&n)!=EOF)
+	{
+		cin=0;
+		for(i=0;i<n;i++)
+		{
+			sum[i]=(a*(n-i))%10+cin;
+			cin=(a*(n-i))/10;
+			if(sum[i]>=10)
+			{
+				cin=cin+sum[i]/10;
+				sum[i]=sum[i]% 10;
+			}
+		}
+		if(cin!=0)
+		{
+			sum[i]=cin;i++;
+		}
+		for(j=i-1;j>=0;j--)
+			printf("%d",sum[j]);
+		printf("\n");
+	}
+	return 0;
+}

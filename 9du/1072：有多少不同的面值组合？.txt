@@ -1,0 +1,33 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <algorithm>
+using namespace std;
+int main(int argc, char *argv[])
+{
+	int x,y,z,j,count,i;
+	int s[210]={0};
+	j=0;
+	for(x=0;x<=5;x++)//0.8
+	{
+		for(y=0;y<=4;y++)//1
+			for(z=0;z<=6;z++)
+			{
+				if (x==0 &&y==0&&z==0) continue;
+				s[j]=8*x+y*10+18*z;
+				j++;
+			}
+	}
+	sort(s,s+210);
+	i=0;count=210;j=1;
+	while(j<210)
+	{
+		while(s[i]==s[j]&&j<210)
+		{
+			j++;count--;
+		}
+		i++;s[i]=s[j];j++;
+	}
+	printf("%d\n",count-1);
+	 system("PAUSE");
+	return 0;
+}

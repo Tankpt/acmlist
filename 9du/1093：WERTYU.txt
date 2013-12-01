@@ -1,0 +1,29 @@
+#include<stdio.h>
+#include<string.h>
+char in[1024];
+char s[]={'`','1','2','3','4','5','6','7','8','9','0',
+'-','=','Q','W','E','R','T','Y','U','I','O','P','[',']',
+'\\','A','S','D','F','G','H','J','K','L',';','\'','Z','X','C','V',
+'B','N','M',',','.','/'};
+int tr(char c){
+	int i=0;
+	while(s[i]!='\0'){
+		if(s[i]==c) return i-1;
+		i++;
+	}
+};
+int main(){
+	int i,len;
+	while(gets(in)){
+		i=0;len=strlen(in);
+		while(i<len){
+			if(in[i]=='A'||in[i]=='Q'||in[i]=='Z'||in[i]==' ') 
+				;
+			else
+				in[i]=s[tr(in[i])];
+			i++;
+		}
+		puts(in);
+	}
+	return 0;
+}

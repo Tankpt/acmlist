@@ -1,0 +1,29 @@
+//dp[i]
+//num[i]
+//　　dp[i] = max(dp[j] + list[i] | 1 <= j < i && list[i] > list[j])，若不存在这样的j则dp[i] = list[i]
+#include <stdio.h>
+#include <string.h>
+int num[1100];
+int dp[1100];
+int main()
+{
+	int n,i,sum,j;
+	while(~scanf("%d",&n)){
+		for(i=1;i<=n;i++)
+			scanf("%d",&num[i]);
+		sum=0;
+		dp[1]=num[1];
+		for(i=2;i<=n;i++){
+			int m=0;
+			for(j=1;j<i;j++){
+				if(num[i]>num[j]&&m<dp[j]){
+					m=dp[j];
+				}
+			}
+			dp[i]=m+num[i];
+			if(sum<dp[i]) sum=dp[i];
+		}
+		printf("%d\n",sum);
+	}
+	return 0;
+}

@@ -1,0 +1,30 @@
+72
+6 7 9
+5
+2 3 7
+78
+0 0 5
+
+#include<stdio.h>
+
+int main()
+{
+	int n,a,b,c,price,tmp;
+	int max,min;
+	while(scanf("%d",&n)!=EOF)
+	{
+		scanf("%d%d%d",&a,&b,&c);
+		tmp=a*1000+b*100+c*10;
+		max=(90000+tmp+9)/n;
+		min=(10000+tmp+0)/n;
+		for(price=max;price>=min;price--)
+		{
+			if(((n*price/10) % 1000)==tmp/10) break;
+		}
+		if(price<min)
+			printf("0\n");
+		else
+			printf("%d %d %d\n",(n*price)/10000,(n*price)%10,price);
+	}
+	return 0;
+}

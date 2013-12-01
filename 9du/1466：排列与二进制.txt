@@ -1,0 +1,26 @@
+#include <stdio.h>
+#include <algorithm>
+#include <math.h>
+#define N 10001
+using namespace std;
+int num[N];
+int main()
+{
+	int n,m,i,sum;
+	while(scanf("%d%d",&n,&m)!=EOF && n!=0)
+	{
+		if(n==0) break;
+		for(i=1;i<N;i++)
+			num[i]=i;
+		num[0]=1;
+		sum=0;
+		for(i=n;i>=n-m+1;i--){
+			while(num[i]%2==0){
+				sum++;
+				num[i]=num[i]/2;
+			}
+		}
+		printf("%d\n",sum);
+	}
+	return 0;
+}

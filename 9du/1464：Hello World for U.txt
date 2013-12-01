@@ -1,0 +1,31 @@
+#include <stdio.h>
+#include <string.h>
+int main()
+{
+	char s[81];
+	int len,n2,k,max,i,j;
+	while(scanf("%s",&s)!=EOF)
+	{
+		len=strlen(s);max=0;
+		for(n2=3;n2<=len;n2++){
+			for(k=n2;k>=1;k--){
+				if(2*k+n2-2==len && k>max)
+					max=k;
+			}
+		}
+		n2=len-2*max+2;
+		for(i=0,j=len-1;i<max-1;i++,j--)
+		{
+			printf("%c",s[i]);
+			for(k=0;k<n2-2;k++)
+				printf(" ");
+			printf("%c\n",s[j]);
+		}
+		while(i<=j)
+		{
+			printf("%c",s[i]);i++;
+		}
+		printf("\n");
+	}
+	return 0;
+}
