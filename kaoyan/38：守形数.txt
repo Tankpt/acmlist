@@ -1,0 +1,20 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<math.h>
+int main() 
+{
+	int n,m,tmp,i;
+	while(scanf("%d",&n)!=EOF )
+	{
+		m=n*n;tmp=n;i=0;
+		while(tmp>0)
+		{
+			tmp=tmp/10;
+			i++;
+		}
+		m=m % int (pow(10,i));
+		if(m==n) printf("Yes!\n");
+		else printf("No!\n");
+	}
+	return 0;
+}

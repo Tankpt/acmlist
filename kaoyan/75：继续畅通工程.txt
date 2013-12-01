@@ -1,0 +1,87 @@
+样例输入：
+3
+1 2 1 0
+1 3 2 0
+2 3 4 0
+3
+1 2 1 0
+1 3 2 0
+2 3 4 1
+3
+1 2 1 0
+1 3 2 1
+2 3 4 1
+0
+样例输出：
+3
+1
+0
+
+
+#include <stdio.h>
+#define N 101
+#include <algorithm>
+using namespace std;
+int tree[N];
+struct Edge{
+	int a;int b;
+	int cost;
+	int state;
+}edge[5000];
+bool cmp(Edge a,Edge b)
+{
+	return a.cost<b.cost;
+};
+int find(int x)
+{
+	int t,ret,tmp;
+	tmp=x;
+	while(tree[x]>0)
+		x=tree[x];
+	ret=x;x=tmp;
+	while(tree[x]>0)
+	{
+		t=tree[x];
+		tree[x]=ret;
+		x=t;
+	}
+	return ret;
+};
+int main() 
+{
+	int n,i,x,y,j,sum;
+	while( scanf("%d",&n)!=EOF && n!=0 )
+	{
+		j=n*(n-1)/2;
+		for(i=1;i<=n;i++)
+			tree[i]=-1;
+		for(i=0;i<j;i++)
+			scanf("%d%d%d%d",&edge[i].a,&edge[i].b,&edge[i].cost,&edge[i].state);
+		for(i=0;i<j;i++)
+		{
+			if(edge[i].state==1)
+			{
+				x=edge[i].a;y=edge[i].b;
+				x=find(x);y=find(y);
+				if(x!=y)
+					tree[x]=y;
+			}
+		}
+		sort(edge,edge+j,cmp);sum=0;
+		for(i=0;i<j;i++)
+		{
+			if(edge[i].state==0)
+			{
+				x=edge[i].a;y=edge[i].b;
+				x=find(x);y=find(y);
+				if(x!=y)
+				{
+					tree[x]=y;
+					sum=sum+edge[i].cost;
+				}
+			}
+		}
+		printf("%d\n",sum);
+	}
+	return 0;
+}

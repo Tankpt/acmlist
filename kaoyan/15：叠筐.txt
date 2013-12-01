@@ -1,0 +1,65 @@
+11 B A 
+5 @ W
+
+#include <stdio.h>
+#include <algorithm>
+char buf[80][80];
+using namespace std;
+int main()
+{
+	int i,j,h,num,z,x,tag;
+	char inner,out;
+	int first=1;
+	while(scanf("%d %c %c",&h,&inner,&out)!=EOF)//-----------------------Òª×¢ÒâÊäÈë
+	{
+		num=h/2;i=j=num;buf[i][j]=inner;tag=1;
+		if(first==1) first=0;
+		else printf("\n");
+		for(z=1;z<=num;z++)
+		{
+			if(tag==1)//outer
+			{
+				for(x=j-z;x<=j+z;x++)
+				{
+					buf[i-z][x]=out;
+					buf[i+z][x]=out;
+				}
+				for(x=i-z;x<=i+z;x++)
+				{
+					buf[x][j-z]=out;
+					buf[x][j+z]=out;
+				}
+				tag=0;
+			}
+			else// tag=0 inner
+			{
+				for(x=j-z;x<=j+z;x++)
+				{
+					buf[i-z][x]=inner;
+					buf[i+z][x]=inner;
+			
+				}
+				for(x=i-z;x<=i+z;x++)
+				{
+					buf[x][j-z]=inner;
+					buf[x][j+z]=inner;
+				}
+				tag=1;
+			}
+		}
+		if(h==1)
+			printf("%c\n",buf[i][j]);
+		else
+			for(i=0;i<h;i++)
+			{
+				for(j=0;j<h;j++)
+				{
+					if((i==0&&j==0) || (i==0&&j==h-1 )|| (i==h-1&&j==0) ||(i==h-1&&j==h-1))
+						printf(" ");
+					else printf("%c",buf[i][j]);
+				}
+				printf("\n");
+			}
+	}
+	return 0;
+}

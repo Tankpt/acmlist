@@ -1,0 +1,25 @@
+123 45
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<math.h>
+int main() 
+{
+	int i,j,sum;
+	char n[12],m[12];
+	while(scanf("%s %s",&n,&m)!=EOF )
+	{
+		sum=0;
+		for(i=0;n[i]!='\0';i++)
+		{
+			for(j=0;m[j]!='\0';j++)
+				sum=sum+(n[i]-'0')*(m[j]-'0');
+		}
+		printf("%d\n",sum);
+		for(i=0;i<12;i++)
+		{
+			n[i]='\0';m[i]='\0';
+		}
+	}
+	return 0;
+}

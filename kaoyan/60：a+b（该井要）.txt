@@ -1,0 +1,92 @@
+#include<stdio.h>
+#include<math.h>
+#include <iostream>
+using namespace std;
+char s1[1002],s2[1002];
+struct bigint{
+	int dig[1000];
+	int size;
+}a,b,c;
+void init(){
+	int i,j,sum;
+	i=0;j=0;a.size=0;b.size=0;sum=0;
+		while(s1[i]!='\0') i++;
+		i--;
+		while(i>=0)
+		{
+			sum=sum+(s1[i]-'0')*pow(10.0,j);
+			if(j==3)
+			{
+				a.dig[a.size]=sum;
+				sum=0;a.size++;
+				j=-1;
+			}
+			i--;j++;
+		}
+		if(sum!=0)
+		{
+			a.dig[a.size]=sum;a.size++;
+		}
+		i=0;sum=0;j=0;
+		while(s2[i]!='\0') i++;
+		i--;
+		while(i>=0)
+		{
+			sum=sum+(s2[i]-'0')*pow(10.0,j);
+			if(j==3)
+			{
+				b.dig[b.size]=sum;
+				sum=0;b.size++;
+				j=-1;
+			}
+			i--;j++;
+		}
+		if(sum!=0)
+		{
+			b.dig[b.size]=sum;b.size++;
+		}
+};
+int main() 
+{
+	int i,j,cin;
+	while(scanf("%s%s",&s1,&s2)!=EOF )
+	{
+		init();
+		i=0;j=0;c.size=0;cin=0;
+		while(i<a.size && j<b.size)
+		{
+			c.dig[c.size]=a.dig[i]+b.dig[j]+cin;
+			cin=c.dig[c.size]/10000;c.dig[c.size]=c.dig[c.size]%10000;
+			c.size++;i++;j++;
+		}
+		if(i==a.size && j<b.size)//a 到达尾
+		{
+			while( j<b.size)
+			{
+				c.dig[c.size]=b.dig[j]+cin;
+				cin=c.dig[c.size]/10000;c.dig[c.size]=c.dig[c.size]%10000;
+				c.size++;j++;
+			}
+		}
+		else if(i<a.size && j==b.size)//b 到达尾
+		{
+			while( i<a.size)
+			{
+				c.dig[c.size]=a.dig[i]+cin;
+				cin=c.dig[c.size]/10000;c.dig[c.size]=c.dig[c.size]%10000;
+				c.size++;i++;
+			}
+		}
+		if(cin!=0)
+		{
+			c.dig[c.size]=cin;c.size++;
+		}
+		printf("%d",c.dig[c.size-1]);
+		for(i=c.size-2;i>=0;i--)
+				printf("%04d",c.dig[i]);
+		printf("\n");
+	}
+	return 0;
+}
+
+

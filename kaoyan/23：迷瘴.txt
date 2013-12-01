@@ -1,0 +1,55 @@
+3
+1 100 10
+100
+2 100 24
+20 30
+3 100 24
+20 20 30
+#include<stdio.h>
+#include<stdlib.h>
+#include<string>
+#include<string.h>
+#include<algorithm>
+using namespace std;
+double pi[100];
+bool cmp(double a,double b)
+{
+	return a<b;
+}
+int main()
+{
+	int n,i,c,v,count,z,j;
+	double w;
+	while(scanf("%d",&c)!=EOF )
+	{
+		for(i=0;i<c;i++)
+		{
+			scanf("%d%d%lf",&n,&v,&w);
+			for(j=0;j<n;j++)
+				scanf("%lf",&pi[j]);
+			sort(pi,pi+n,cmp);
+			j=0;
+			if(w<pi[j])
+				printf("0 0.00\n");
+			else
+			{
+				z=j+1;count=1;
+				while(z<n)
+				{
+					if((pi[j]*count+pi[z])/(count+1)<=w)
+					{
+						pi[j]=(pi[j]*count+pi[z])/(count+1);
+						pi[z]=101;
+						count++;
+						sort(pi,pi+n);
+						n--;
+						j=0;z=j+1;
+					}
+					else break;
+				}
+				printf("%d %.2lf\n",count*v,pi[0]/100);
+			}
+		}
+	}
+	return 0;
+}

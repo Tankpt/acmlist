@@ -1,0 +1,39 @@
+5
+1 5 2 4 3
+3
+2 5 6
+#include<stdio.h>
+#include<stdlib.h>
+#include<string>
+#include<string.h>
+#include<algorithm>
+using namespace std;
+int main()
+{
+	int n,i,m,mid,str,end,key;
+	while(scanf("%d",&n)!=EOF)
+	{
+		int num[80];
+		for(i=0;i<n;i++)
+			scanf("%d",&num[i]);
+		sort(num,num+n);
+		scanf("%d",&m);
+		for(i=0;i<m;i++)
+		{
+			scanf("%d",&key);
+			str=0;end=n-1;
+			while(str<=end)
+			{
+				mid=(str+end)/2;
+				if(num[mid]==key) break;
+				else if(num[mid]>key)
+					end=mid-1;
+				else
+					str=mid+1;
+			}
+			if(str<=end) printf("YES\n");
+			else printf("NO\n");
+		}
+	}
+	return 0;
+}

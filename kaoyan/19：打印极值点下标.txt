@@ -1,0 +1,53 @@
+3
+10
+10 12 12 11 11 12 23 24 12 12
+15
+12 12 122 112 222 211 222 221 76 36 31 234 256 76 76 
+15
+12 14 122 112 222 222 222 221 76 36 31 234 256 76 73
+
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string>
+#include<string.h>
+#include<algorithm>
+using namespace std;
+int main()
+{
+	int n,i,m,j,count;
+	while(scanf("%d",&n)!=EOF)
+	{
+		int num[80],key[80];
+		for(i=0;i<n;i++)
+		{
+			scanf("%d",&m);
+			count=0;
+			for(j=0;j<m;j++)
+				scanf("%d",&num[j]);
+			if(num[0]!=num[1]) 
+			{
+				key[count]=0;count++;
+			}
+			for(j=1;j<m-1;j++)
+			{
+				if((num[j]>num[j+1] && num[j]>num[j-1]) || (num[j]<num[j+1] && num[j]<num[j-1]))
+				{
+					key[count]=j;count++;
+				}
+			}
+			if(num[m-1]!=num[m-2])
+			{
+				key[count]=m-1;count++;
+			}
+			for(j=0;j<count;j++)
+			{
+				if(j!=count-1)
+					printf("%d ",key[j]);
+				else printf("%d\n",key[j]);
+			}
+
+		}
+	}
+	return 0;
+}

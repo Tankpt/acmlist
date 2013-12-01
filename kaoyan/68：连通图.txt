@@ -1,0 +1,58 @@
+样例输入：
+4 3
+1 2
+2 3
+3 2
+3 2
+1 2
+2 3
+0 0
+样例输出：
+NO
+YES
+
+#include <stdio.h>
+int tree[1001];
+int find(int x)
+{
+	int t,ret,tmp;
+	tmp=x;
+	while(tree[x]!=-1)
+		x=tree[x];
+	ret=x;x=tmp;
+	while(tree[x]!=-1)
+	{
+		t=tree[x];
+		tree[x]=ret;
+		x=t;
+	}
+	return ret;
+};
+int main() 
+{
+	int n,m,i,a,b,tmp1,tmp2;
+	while( scanf("%d%d",&n,&m)!=EOF && n!=0 )
+	{
+		for(i=1;i<=1000;i++)//init
+			tree[i]=-1;
+		while(m>0)
+		{
+			scanf("%d%d",&a,&b);
+			tmp1=find(a);
+			tmp2=find(b);
+			if(tmp1!=tmp2)//此处很重要必须要找到两个集合定点。否则在某种系列下错误。见教程
+				tree[tmp2]=tmp1;
+			m--;
+		}
+		tmp1=0;
+		for(i=1;i<=n;i++)
+		{
+			if(tree[i]==-1)
+				tmp1++;
+		}
+		if(tmp1==1) printf("YES\n");
+		else printf("NO\n");
+	}
+	return 0;
+
+}

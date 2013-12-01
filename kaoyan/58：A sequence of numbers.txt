@@ -1,0 +1,64 @@
+//必须二分法求。。否则wr会越界
+#include<stdio.h>
+#include<math.h>
+#include <iostream>
+using namespace std;
+int main() 
+{
+	int n,i,k,tmp;
+	long long a,b,c,d,q; 
+	while(scanf("%d",&n)!=EOF )
+	{
+		for(i=0;i<n;i++)
+		{
+			scanf("%lld%lld%lld%d",&a,&b,&c,&k);
+			if(c-b==b-a)//等差b=a+(n-1)dx
+				d=a+(k-1)*((b-a)%200907);
+			else//等比b=a*q^(n-1)
+			{
+				k=k-1;q=b/a;d=1;
+				while(k!=0)
+				{
+					if(k%2==1)
+					{
+						d=d*q;d=d%200907;
+					}
+					q=q*q;k=k/2;q=q%200907;
+				}
+				d=a*d;
+			}
+			d=d%200907;
+			printf("%lld\n",d);
+		}
+	}
+	return 0;
+}
+
+、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、
+
+
+#include<stdio.h>
+#include<math.h>
+#include <iostream>
+using namespace std;
+int main() 
+{
+	int n,i,k;
+	long long a,b,c,d; 
+	while(scanf("%d",&n)!=EOF )
+	{
+		for(i=0;i<n;i++)
+		{
+			scanf("%lld%lld%lld%d",&a,&b,&c,&k);
+			if(c-b==b-a)//等差b=a+(n-1)dx
+				d=a+(k-1)*((b-a)%200907);
+			else//deng
+				d=a*pow(b/a%200907*1.0,k-1);
+			d=d%200907;
+			printf("%lld\n",d);
+		}
+	}
+	return 0;
+}
+
+

@@ -1,0 +1,85 @@
+样例输入：
+3 2
+1 2 5 6
+2 3 4 5
+1 3
+4 4
+1 2 3 2
+1 3 1 2
+2 4 1 1
+3 4 3 2
+1 4
+0 0
+样例输出：
+9 11
+4 3
+
+#include <stdio.h>
+#include <vector>
+using namespace std;
+struct E{
+	int next;
+	int cost;
+	int pay;
+};
+vector<E> edge[1001]; 
+bool mark[1001];
+int dis[1001];
+int fee[1001];
+int main() 
+{
+	int n,i,j,m,newp;
+	int a,b,d,p,s,t;
+	int point,c,pa,max;
+	while( scanf("%d%d",&n,&m)!=EOF){
+		if(m==0 && n==0) break;
+		for(i=1;i<=n;i++)
+			edge[i].clear();
+		while(m>0){
+			scanf("%d%d%d%d",&a,&b,&d,&p);
+			E tmp;
+			tmp.cost=d;tmp.pay=p;
+			tmp.next=b;
+			edge[a].push_back(tmp);
+			tmp.next=a;
+			edge[b].push_back(tmp);
+			m--;
+		}
+		scanf("%d%d",&s,&t);
+		for(i=1;i<=n;i++){
+			dis[i]=-1;
+			mark[i]=false;fee[i]=-1;
+		}
+		newp=s;
+		dis[newp]=0;mark[newp]=true;fee[newp]=0;
+		for(i=1;i<n;i++){//运行n-1次
+			for(j=0;j<edge[newp].size();j++){
+				point=edge[newp][j].next;
+				c=edge[newp][j].cost;
+				pa=edge[newp][j].pay;
+				if(mark[point]==true) continue;
+				if(dis[point]==-1 || dis[point]>dis[newp]+c ||(dis[point]==dis[newp]+c && fee[point]>fee[newp]+pa)){
+						dis[point]=dis[newp]+c;
+						fee[point]=fee[newp]+pa;
+				}
+			/*	if(dis[point]==dis[newp]+c && fee[point]<fee[newp]+pa){
+					if(fee[point]==-1) continue;
+					fee[point]=fee[newp]+pa;
+				}*/
+			}
+			max=123123123;
+			for(j=1;j<=n;j++){
+				if(mark[j]==true || dis[j]==-1) continue;
+				if(dis[j]<max)
+				{
+					newp=j;
+					max=dis[j];
+				}
+			}
+			mark[newp]=true;
+
+		}
+		printf("%d %d\n",dis[t],fee[t]);
+	}
+	return 0;
+}

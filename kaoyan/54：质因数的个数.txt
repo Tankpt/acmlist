@@ -1,0 +1,47 @@
+
+
+#include<stdio.h>
+#include<math.h>
+int tag[100001];//0--100001 mark
+int num[100001];
+int prim;
+int main() 
+{
+	int i,sum,n,j;
+	prim=0;
+	for(i=2;i<100001;i++)
+		tag[i]=1;//init all is prim number
+	for(i=2;i<100001;i++)
+	{
+		if(tag[i]==0) continue;
+		num[prim]=i;prim++;
+		for(j=i+i;j<100001;j+=i)//试试i*i
+			tag[j]=0;
+	}
+	while(scanf("%d",&n)!=EOF && n!=0)
+	{
+		sum=0;
+		for(i=0,j=0;i<prim;i++)
+		{
+			if(n%num[i]==0)
+			{
+				tag[j]=0;
+				while(n%num[i]==0)
+				{
+					n=n/num[i];
+					tag[j]++;
+				}
+				j++;
+			}
+			if(n==1) break;
+		}
+		if(n!=1)
+			sum=1;//之前的版本。。在for钱有else。。不行。比如一个大于100000的数N=2*M,且M依然大于100000且为素数
+		for(i=0;i<j;i++)
+			sum=sum+tag[i];
+		printf("%d\n",sum);
+	}
+	return 0;
+}
+
+

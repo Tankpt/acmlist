@@ -1,0 +1,23 @@
+4
+1 4 3 2
+
+#include<stdio.h>
+#include<iostream>
+#include<algorithm>
+using namespace std;
+int main()
+{
+	int n,i,buf[100];
+	while(scanf("%d",&n)!=EOF)
+	{
+		for(i=0;i<n;i++)
+			scanf("%d",&buf[i]);
+		sort(buf,buf+n);
+		for(i=0;i<n;i++)
+		{
+			printf("%d ",buf[i]);	
+		}
+		printf("\n");
+	}
+	return 0;
+}

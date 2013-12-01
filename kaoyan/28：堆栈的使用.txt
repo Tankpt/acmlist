@@ -1,0 +1,53 @@
+3
+A
+P 5
+A
+4
+P 3
+P 6
+O 
+A
+0
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+//øº¬« ‰»Î–° Â
+
+#include<stack>
+using namespace std;
+stack<int> p;
+int main() 
+{
+	int n,i,x,j;
+	char in[32];
+	while(scanf("%d\n",&n)!=EOF && n!=0 )
+	{
+		while(p.empty()==false) p.pop();
+		for(i=0;i<n;i++)
+		{
+			gets(in);
+			if(in[0]=='P')  
+			{
+				x=0;j=2;
+				while(in[j]!='\0')
+				{
+					x=x*10+in[j]-'0';
+					j++;
+				}
+				p.push(x);
+			}
+			else if(in[0]=='A')
+			{
+				if(p.empty()==true) printf("E\n");
+				else printf("%d\n",p.top());
+			}
+			else 
+			{
+				if(p.empty()==false)  p.pop();
+			}
+		}
+		printf("\n");
+	}
+	return 0;
+}

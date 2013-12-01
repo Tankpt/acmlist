@@ -1,0 +1,61 @@
+4
+01 李江 男 21
+02 刘唐 男 23
+03 张军 男 19
+04 王娜 女 19
+5
+
+
+
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string>
+#include<string.h>
+#include<algorithm>
+using namespace std;
+struct Student{
+	char id[100];
+	char name[100];
+	char sex[5];
+	int age;
+}student[1000];
+bool cmp(Student a,Student b)
+{
+	int tmp;
+	tmp=strcmp(a.id,b.id);
+	return tmp<0; 
+}
+int main()
+{
+	int n,i,m,tmp,str,end,mid;
+	while(scanf("%d",&n)!=EOF)
+	{
+		for(i=0;i<n;i++)
+			scanf("%s%s%s%d",&student[i].id,&student[i].name,&student[i].sex,&student[i].age);
+		scanf("%d",&m);
+		sort(student,student+n,cmp);
+		for(i=0;i<m;i++)
+		{
+			char x[100];
+			scanf("%s",&x);
+			str=0;end=n-1;
+			while(str<=end)
+			{
+				mid=(str+end)/2;
+				tmp=strcmp(x,student[mid].id);
+				if(tmp==0) 
+				{
+					printf("%s %s %s %d\n",student[mid].id,student[mid].name,student[mid].sex,student[mid].age);
+					break;
+				}
+				else if(tmp<0)
+					end=mid-1;
+				else
+					str=mid+1;
+			}
+			if(str>end) printf("No Answer!\n");
+		}
+	}
+	return 0;
+}

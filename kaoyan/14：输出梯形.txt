@@ -1,0 +1,27 @@
+4
+
+#include <stdio.h>
+#include <algorithm>
+
+using namespace std;
+int main()
+{
+	int i,h,len,key,j;
+	while(scanf("%d",&h)!=EOF)
+	{
+		for(i=0;i<h;i++)
+		{
+			len=h+(h-1)*2;
+			key=(h-1)*2-i*2;
+			for(j=0;j<len;j++)
+			{
+				if(j<key)
+					printf(" ");
+				else
+					printf("*");
+			}
+			printf("\n");
+		}
+	}
+	return 0;
+}

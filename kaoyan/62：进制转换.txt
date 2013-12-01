@@ -1,0 +1,92 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+struct bigint{
+	int dig[1000];
+	int size;
+}a;
+//改了好多次
+void mul(int n,int x)//转化为10进制
+{
+	int i,tmp,cin=0;//cin为进位
+	for(i=0;i<a.size;i++)
+	{
+		tmp=a.dig[i];
+		a.dig[i]=(a.dig[i]*x+cin)%10000;//本位加进位
+		cin=(tmp*x+cin)/10000;
+	}
+	if(cin!=0)//若高为有进位，则加一位
+	{
+		a.dig[i]=cin;a.size++;
+	}
+	i=0;
+	cin=(a.dig[i]+n)/10000;//是否进位
+	a.dig[i]=a.dig[i]+n;//最低位加上n
+	while(cin!=0)
+	{
+		a.dig[i]=a.dig[i]%10000;//最后一次。卡在这里。。原来多加 了一个n
+		i++;
+		a.dig[i]=a.dig[i]+cin;
+		cin=(a.dig[i]+n)/10000;
+	}
+	if(i==a.size) a.size++;//最高位有进位则加1
+};
+int div(char *s,int x)
+{
+	int j,i=0,mx,tmp;//mx为高位的余数
+	while(a.size>0)//当还没除完
+	{
+		mx=0;
+		for(j=a.size-1;j>=0;j--)//从高位开始除
+		{
+			tmp=mx*10000+a.dig[j];//本位加高位的余数
+			if(tmp/x!=0)//够除
+			{
+				a.dig[j]=tmp/x;	mx=tmp%x;
+			}
+			else//不够除
+			{
+				a.dig[j]=0;
+				mx=tmp;
+				if(j==a.size-1) //若是最高位不够，则最高位数-1
+					a.size--;
+			}
+		}
+		if(mx>9)
+			s[i]=mx-10+'a';
+		else s[i]=mx+'0';
+		i++;
+	}
+	return i;
+};
+void init()
+{
+	int i;
+	a.size=1;
+	for(i=0;i<1000;i++)
+		a.dig[i]=0;
+}
+int main() 
+{
+	int n,i,m,len,tmp,end;
+	while(scanf("%d%d",&m,&n)!=EOF )
+	{
+		char s[10000];
+		scanf("%s",&s);
+		len=strlen(s);
+		init();
+		for(i=0;i<len;i++)
+		{
+			if(s[i]>='A') 
+				tmp=s[i]-'A'+10;
+			else tmp=s[i]-'0';
+			mul(tmp,m);//转化为10进制，从最高位开始，每次为s*m+tmp,累加
+		}
+		end=div(s,n);//返回的是转化后的最高位end
+		for(i=end-1;i>=0;i--)
+			printf("%c",s[i]);
+		printf("\n");
+	}
+	return 0;
+
+}

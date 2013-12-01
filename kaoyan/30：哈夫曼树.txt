@@ -1,0 +1,29 @@
+5  
+1 2 2 5 9
+---------------------------------------表示最大int 1<<31-1
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include<algorithm>
+using namespace std;
+int main() 
+{
+	int n,i,we[1000],sum,j;
+	while(scanf("%d",&n)!=EOF)
+	{
+		for(i=0;i<n;i++)
+			scanf("%d",&we[i]);
+		sort(we,we+n);
+		sum=0;j=n;
+		for(i=1;i<n;i++)//n-1挑选
+		{
+			we[0]=we[0]+we[1];we[1]=2147483647;//此处第一次定义过小。。。注意。。
+			sum=sum+we[0];
+			sort(we,we+j);
+			j--;
+		}
+		printf("%d\n",sum);
+	}
+	return 0;
+}

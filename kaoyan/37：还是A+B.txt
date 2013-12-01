@@ -1,0 +1,31 @@
+1 2 1
+11 21 1
+108 8 2
+36 64 3
+0 0 1
+
+//杭电oj上挂了。。注意数据1 1 2。应该是-1 、若有&&a&&b则是2
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<math.h>
+int main() 
+{
+	int a,b,k,i,sum;
+	while(scanf("%d %d %d",&a,&b,&k)!=EOF )
+	{
+		if(a==0 && b==0) break;
+		i=0;sum=a+b;
+		while( i<k)//一开始加了&&a &&b错了
+		{
+			if(a%10 == b%10)
+			{
+				i++;a=a/10;b=b/10;
+			}
+			else break;
+		}
+		if(i==k) printf("-1\n");
+		else printf("%d\n",sum);
+	}
+	return 0;
+}

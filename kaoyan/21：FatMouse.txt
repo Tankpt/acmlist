@@ -1,0 +1,50 @@
+5 3
+7 2
+4 3
+5 2
+20 3
+25 18
+24 15
+15 10
+-1 -1
+#include<stdio.h>
+#include<stdlib.h>
+#include<string>
+#include<string.h>
+#include<algorithm>
+using namespace std;
+struct Good{
+	double j;
+	double f;
+	double price;
+}good[10000];
+bool cmp(Good a,Good b)
+{
+	return a.price>b.price;
+}
+int main()
+{
+	int n,i;
+	double m,sum;
+	while(scanf("%lf%d",&m,&n)!=EOF )
+	{
+		if(m==-1 && n==-1) break;
+		for(i=0;i<n;i++)
+		{
+			scanf("%lf%lf",&good[i].j,&good[i].f);
+			good[i].price=good[i].j/good[i].f;
+		}
+		sort(good,good+n,cmp);
+		i=0;sum=0;
+		while(m>good[i].f && i<n)
+		{
+			sum=sum+good[i].j;
+			m=m-good[i].f;
+			i++;
+		}
+		if(i<n)
+			sum=sum+m*good[i].price;
+		printf("%.3lf\n",sum);
+	}
+	return 0;
+}

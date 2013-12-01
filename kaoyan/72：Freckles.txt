@@ -1,0 +1,231 @@
+3
+1.0 1.0
+2.0 2.0
+2.0 4.0
+
+
+
+#include <stdio.h>
+#define N 101
+#include <algorithm>
+#include <math.h>
+using namespace std;
+int tree[N];
+struct Edge{
+	int a;int b;
+	double cost;
+}edge[5000];
+struct Point{
+	double x;double y;
+}point[101];
+bool cmp(Edge a,Edge b)
+{
+	return a.cost<b.cost;
+};
+int find(int x)
+{
+	int t,ret,tmp;
+	tmp=x;
+	while(tree[x]>0)
+		x=tree[x];
+	ret=x;x=tmp;
+	while(tree[x]>0)
+	{
+		t=tree[x];
+		tree[x]=ret;
+		x=t;
+	}
+	return ret;
+};
+double distance( Point a , Point b)
+{
+	double tmp=(a.x-b.x)*(a.x-b.x)+(a.y-b.y)*(a.y-b.y);
+	return sqrt(tmp);
+};
+int main() 
+{
+	int n,i,j,k,x,y;
+	double sum;
+	while( scanf("%d",&n)!=EOF && n!=0 )
+	{
+		for(i=0;i<N;i++)
+			tree[i]=-1;
+		for(i=0;i<n;i++)
+			scanf("%lf%lf",&point[i].x,&point[i].y);
+		k=0;sum=0.0;
+		for(i=0;i<n;i++)
+			for(j=i+1;j<n;j++)
+			{
+				edge[k].a=i;
+				edge[k].b=j;
+				edge[k].cost=distance(&point[i],&point[j]);//不加取地址则发生错误
+				k++;
+			}
+		sort(edge,edge+k,cmp);
+		for(i=0;i<k;i++)
+		{
+			x=edge[i].a;y=edge[i].b;
+			x=find(x);y=find(y);
+			if(x!=y) 
+			{
+				tree[x]=y;
+				sum=sum+edge[i].cost;
+			}
+		}
+		printf("%.2lf\n",sum);
+	}
+	return 0;
+}
+
+--------------------------------------------------------------------------------------------------
+
+
+
+#include <stdio.h>
+#define N 101
+#include <algorithm>
+#include <math.h>
+using namespace std;
+int tree[N];
+struct Edge{
+	int a;int b;
+	double cost;
+}edge[5000];
+struct Point{
+	double x;double y;
+}point[101];
+bool cmp(Edge a,Edge b)
+{
+	return a.cost<b.cost;
+};
+int find(int x)
+{
+	int t,ret,tmp;
+	tmp=x;
+	while(tree[x]>0)
+		x=tree[x];
+	ret=x;x=tmp;
+	while(tree[x]>0)
+	{
+		t=tree[x];
+		tree[x]=ret;
+		x=t;
+	}
+	return ret;
+};
+double distance( Point a , Point b)
+{
+	double tmp=(a.x-b.x)*(a.x-b.x)+(a.y-b.y)*(a.y-b.y);
+	return sqrt(tmp);
+};
+int main() 
+{
+	int n,i,j,k,x,y;
+	double sum,tmp;
+	while( scanf("%d",&n)!=EOF && n!=0 )
+	{
+		for(i=0;i<N;i++)
+			tree[i]=-1;
+		for(i=0;i<n;i++)
+			scanf("%lf%lf",&point[i].x,&point[i].y);
+		k=0;sum=0.0;
+		for(i=0;i<n;i++)
+			for(j=i+1;j<n;j++)
+			{
+				edge[k].a=i;
+				edge[k].b=j;
+				tmp=(point[i].x-point[j].x)*(point[i].x-point[j].x)+(point[i].y-point[j].y)*(point[i].y-point[j].y);
+				edge[k].cost=sqrt(tmp);//不加取地址则发生错误
+				k++;
+			}
+		sort(edge,edge+k,cmp);
+		for(i=0;i<k;i++)
+		{
+			x=edge[i].a;y=edge[i].b;
+			x=find(x);y=find(y);
+			if(x!=y) 
+			{
+				tree[x]=y;
+				sum=sum+edge[i].cost;
+			}
+		}
+		printf("%.2lf\n",sum);
+	}
+	return 0;
+}
+
+----------------------------------------------------------------------------------------
+
+
+
+
+#include <stdio.h>
+#define N 101
+#include <algorithm>
+#include <math.h>
+using namespace std;
+int tree[N];
+struct Edge{
+	int a;int b;
+	double cost;
+}edge[5000];
+struct Point{
+	double x;double y;
+}point[101];
+bool cmp(Edge a,Edge b)
+{
+	return a.cost<b.cost;
+};
+int find(int x)
+{
+	int t,ret,tmp;
+	tmp=x;
+	while(tree[x]>0)
+		x=tree[x];
+	ret=x;x=tmp;
+	while(tree[x]>0)
+	{
+		t=tree[x];
+		tree[x]=ret;
+		x=t;
+	}
+	return ret;
+};
+double distance( Point *a , Point *b)
+{
+	double tmp=(a->x-b->x)*(a->x-b->x)+(a->y-b->y)*(a->y-b->y);
+	return sqrt(tmp);
+};
+int main() 
+{
+	int n,i,j,k,x,y;
+	double sum;
+	while( scanf("%d",&n)!=EOF && n!=0 )
+	{
+		for(i=0;i<N;i++)
+			tree[i]=-1;
+		for(i=0;i<n;i++)
+			scanf("%lf%lf",&point[i].x,&point[i].y);
+		k=0;sum=0.0;
+		for(i=0;i<n;i++)
+			for(j=i+1;j<n;j++)
+			{
+				edge[k].a=i;edge[k].b=j;
+				edge[k].cost=distance(&point[i],&point[j]);//不加取地址则发生错误 ..
+				k++;
+			}
+		sort(edge,edge+k,cmp);
+		for(i=0;i<k;i++)
+		{
+			x=edge[i].a;y=edge[i].b;
+			x=find(x);y=find(y);
+			if(x!=y) 
+			{
+				tree[x]=y;
+				sum=sum+edge[i].cost;
+			}
+		}
+		printf("%.2lf\n",sum);
+	}
+	return 0;
+}

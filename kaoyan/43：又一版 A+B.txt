@@ -1,0 +1,24 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+int main() 
+{
+	int m,i,num[64];
+	long long a,b,sum;
+	while(scanf("%d",&m)!=EOF && m!=0)
+	{
+		scanf("%lld%lld",&a,&b);
+		sum=a+b;i=0;
+		while(sum/m>0)
+		{
+			num[i]=sum%m;
+			sum=sum/m;
+			i++;
+		}
+		num[i]=sum;
+		for(m=i;m>=0;m--)
+			printf("%d",num[m]);
+		printf("\n");
+	}
+	return 0;
+}

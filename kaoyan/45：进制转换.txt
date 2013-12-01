@@ -1,0 +1,46 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+int main() 
+{
+	int i,str,j,c,tmp,n;
+	char a[30],b[100];
+	while(scanf("%s",&a)!=EOF )
+	{
+		str=0;j=0;
+		n=strlen(a);
+		while(str<=n-1)
+		{
+			i=str;c=0;
+			while(a[i]!='\0')
+			{
+				tmp=a[i]-'0';
+				if((c*10+tmp)<2)// not enough
+				{	
+					if(i==str) 
+					{str++;c=tmp;a[i]='\0';}
+					else 
+					{c=tmp;a[i]='0';}
+				}
+				else//enough
+				{
+					a[i]=(c*10+tmp)/2+'0';
+					c=(c*10+tmp)%2;	
+				}
+				i++;
+			 }
+			 b[j]=c+'0';j++;
+		}
+		b[j]=a[str];//会出现空格。。很神奇。。。好奇
+		while(j>=0)
+		{
+			printf("%c",b[j]);
+			j--;
+		}
+		printf("\n");
+	}
+
+	return 0;
+}
+
+

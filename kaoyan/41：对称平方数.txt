@@ -1,0 +1,26 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+int main() 
+{
+	int i,n,num[8],dx,j;
+	printf("0\n");
+	for(i=1;i<256;i++)
+	{
+		n=i*i;j=0;
+		while(n>0)
+		{
+			num[j]=n%10;n=n/10;
+			j++;
+		}
+		n=j;dx=0;j=n/2;
+		while(dx<j)
+		{
+			if(num[dx]!=num[n-1-dx])
+				break;
+			dx++;
+		}
+		if(dx==j) printf("%d\n",i);
+	}
+	return 0;
+}

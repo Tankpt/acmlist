@@ -1,0 +1,301 @@
+样例输入：
+8 10
+AAB BBB 10
+BBB AAA 20
+AAA CCC 40
+DDD EEE 5
+EEE DDD 70
+FFF GGG 30
+GGG HHH 20
+HHH FFF 10
+8 70
+AAA BBB 10
+BBB AAA 20
+AAA CCC 40
+DDD EEE 5
+EEE DDD 70
+FFF GGG 30
+GGG HHH 20
+HHH FFF 10
+样例输出：
+2
+AAA 3
+GGG 3
+0
+------------------------------------------------------------------------------------------------------
+
+#include <stdio.h>
+#include <algorithm>
+#include <string.h>
+using namespace std;
+#define N 2002
+int tree[N],dx;
+struct Person{
+	char name[5];
+	int cost;//代价
+	int sum;//zongjia
+	int max;//max 下标
+}person[N];
+struct outpt{
+	char name[5];
+	int num;
+}man[N];
+int find(int x)
+{
+	int t,ret,tmp;
+	tmp=x;
+	while(tree[x]>=0)
+		x=tree[x];
+	ret=x;x=tmp;
+	while(tree[x]>=0)
+	{
+		t=tree[x];
+		tree[x]=ret;
+		x=t;
+	}
+	return ret;
+};
+int sear(char *s,int time){
+	int j,a;
+	for(j=0;j<dx;j++)
+	{
+		if(strcmp(person[j].name,s)==0) 
+			break;//find
+	}
+	if(j==dx)// not find
+	{
+		strcpy(person[dx].name,s);a=dx;dx++;
+	}
+	else
+		a=j;
+	person[a].cost+=time;
+	return a;
+};
+bool cmp( outpt a, outpt b){
+	int tmp=strcmp(a.name,b.name);
+	return tmp<0;
+};
+int main() 
+{
+	int n,k,i,time;
+	int a,b,j,tmp;
+	char na1[5],na2[5];
+	while( scanf("%d%d",&n,&k)!=EOF)
+	{
+		dx=0;
+		for(i=0;i<2*n;i++)
+		{
+			tree[i]=-1;person[i].sum=person[i].cost=0;person[i].max=i;
+		}
+		for(i=0;i<n;i++)
+		{
+			scanf("%s%s%d",&na1,&na2,&time);
+			a=sear(na1,time);b=sear(na2,time);
+			a=find(a);b=find(b);
+			if(a!=b)//different
+			{	
+				person[a].sum=person[a].sum+person[b].sum+time;
+				tree[a]=tree[a]+tree[b];
+				tree[b]=a;
+			}
+			else 
+				person[a].sum=person[a].sum+time;
+		}
+		tmp=0;
+		for(j=0;j<dx;j++)
+		{
+			if(tree[j]<-2 && person[j].sum>k) //头结点
+				tmp++;
+			a=find(j);
+			if(person[j].cost>person[person[a].max].cost)
+				person[a].max=j;
+		}
+		printf("%d\n",tmp);
+		tmp=0;
+		for(j=0;j<dx;j++)
+		{
+			if(tree[j]<-2 && person[j].sum>k)
+			{
+				strcpy(man[tmp].name,person[person[j].max].name);
+				man[tmp].num=-tree[j];tmp++;
+			}
+		}
+		sort(man,man+tmp,cmp);
+		for(j=0;j<tmp;j++)
+			printf("%s %d\n",man[j].name,man[j].num);
+	}
+	return 0;
+}
+
+
+-------------------------------------------------------------------------------------------------------
+#include <stdio.h>
+#include <algorithm>//这个错误的原因是sort函数的过程中会将tree的顺序弄乱
+#include <string.h>
+using namespace std;
+#define N 2000
+int tree[N],dx;
+struct Person{
+	char name[5];
+	int cost;//代价
+	int sum;//zongjia
+	int max;//max 下标
+}person[N];
+int find(int x)
+{
+	int t,ret,tmp;
+	tmp=x;
+	while(tree[x]>=0)
+		x=tree[x];
+	ret=x;x=tmp;
+	while(tree[x]>=0)
+	{
+		t=tree[x];
+		tree[x]=ret;
+		x=t;
+	}
+	return ret;
+};
+int sear(char *s,int time){
+	int j,a;
+	for(j=0;j<dx;j++)
+	{
+		if(strcmp(person[j].name,s)==0) 
+			break;//find
+	}
+	if(j==dx)// not find
+	{
+		strcpy(person[dx].name,s);a=dx;dx++;
+	}
+	else
+		a=j;
+	person[a].cost+=time;
+	return a;
+};
+bool cmp( Person a, Person b){
+	int tmp=strcmp(a.name,b.name);
+	return tmp<0;
+};
+int main() 
+{
+	int n,k,i,time;
+	int a,b,j,tmp;
+	char na1[5],na2[5];
+	while( scanf("%d%d",&n,&k)!=EOF)
+	{
+		dx=0;
+		for(i=0;i<2*n;i++)
+		{
+			tree[i]=-1;person[i].sum=person[i].cost=0;person[i].max=i;
+		}
+		for(i=0;i<n;i++)
+		{
+			scanf("%s%s%d",&na1,&na2,&time);
+			a=sear(na1,time);b=sear(na2,time);
+			a=find(a);b=find(b);
+			if(a!=b)//different
+			{	
+				person[a].sum=person[a].sum+person[b].sum+time;
+				tree[a]=tree[a]+tree[b];
+				tree[b]=a;
+			}
+			else 
+				person[a].sum=person[a].sum+time;
+		}
+		tmp=0;
+		sort(person,person+dx,cmp);
+		for(j=0;j<dx;j++)
+		{
+			if(tree[j]<-2 && person[j].sum>k) //头结点
+				tmp++;
+			a=find(j);
+			if(person[j].cost>person[person[a].max].cost)
+				person[a].max=j;
+		}
+		printf("%d\n",tmp);
+		for(j=0;j<dx;j++)
+		{
+			if(tree[j]<-2 && person[j].sum>k)
+				printf("%s %d\n",person[person[j].max].name,-tree[j]);
+		}
+	}
+	return 0;
+}
+
+
+-------------------------------------------------------------------------------------------------------#include <stdio.h>
+#include <string>
+#include <map>
+#define N 2000
+using namespace std;
+map<string ,int> M;
+int tree[N];
+int count[N];
+int find(int x)
+{
+	int t,ret,tmp;
+	tmp=x;
+	while(tree[x]>0)
+		x=tree[x];
+	ret=x;x=tmp;
+	while(tree[x]>0)
+	{
+		t=tree[x];
+		tree[x]=ret;
+		x=t;
+	}
+	return ret;
+};
+int main() 
+{
+	int n,k,i,time,dx;
+	int a,b,j,tmp;
+	char s1[5],s2[5];
+	string na1,na2,na;
+	while( scanf("%d%d",&n,&k)!=EOF)
+	{
+		M.clear();
+		dx=0;
+		for(i=0;i<2*n;i++)
+		{
+			tree[i]=-1;count[i]=0;
+		}
+		for(i=0;i<n;i++)
+		{
+			scanf("%s%s%d",&s1,&s2,&time);
+			na1=s1;na2=s2;
+			if(M.find(na1)==M.end())//无映射
+			{
+				M[na1]=dx;a=dx;dx++;
+			}
+			else a=M[na1];
+			if(M.find(na2)==M.end())//无映射
+			{
+				M[na2]=dx;b=dx;dx++;
+			}
+			else b=M[na2];
+			count[a]+=time;count[b]+=time;
+			a=find(a);b=find(b);
+			if(a!=b)
+			{
+				tree[a]=tree[a]+tree[b];tree[b]=a;
+			}
+		}
+		tmp=0;
+		for(j=0;j<2*n;j++)
+		{
+			if(tree[j]<0 && count[j]>=k) //头结点
+				tmp++;
+		}
+		printf("%d\n",tmp);
+		for(j=0;j<2*n;j++)
+		{
+			if(tree[j]<=-k)
+			{
+				printf("%s %d\n",na1,-tree[j]);
+			}
+		}
+	}
+	return 0;
+
+}

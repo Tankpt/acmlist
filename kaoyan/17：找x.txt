@@ -1,0 +1,29 @@
+2
+1 3
+0
+
+#include<stdio.h>
+#include<stdlib.h>
+using namespace std;
+struct Student{
+
+int main()
+{
+	int n,buf[201],i,m;
+	while(scanf("%d",&n)!=EOF)
+	{
+		for(i=0;i<n;i++)
+			scanf("%d",&buf[i]);
+		scanf("%d",&m);
+		for(i=0;i<n;i++)
+		{
+			if(buf[i]==m)
+			{
+				printf("%d\n",i);
+				break;
+			}
+		}
+		if(i==n) printf("-1\n");
+	}
+	return 0;
+}

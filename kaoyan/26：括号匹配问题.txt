@@ -1,0 +1,46 @@
+)(rttyy())sss)(
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string>
+#include<stack>
+using namespace std;
+stack<int> S;
+int main()
+{
+	char dis[100],sou[100];
+	int i;
+	while(scanf("%s",&sou)!=EOF )
+	{
+		i=0;
+		while(S.empty()==false) S.pop();
+		while(sou[i]!='\0')
+		{
+			if(sou[i]=='(')
+			{
+				S.push(i);dis[i]=' ';
+			}
+			else if(sou[i]==')')
+			{
+				if(S.empty()==true)
+					dis[i]='?';
+				else
+				{
+					S.pop();dis[i]=' ';
+				}
+			}
+			else dis[i]=' ';
+			i++;
+		}
+		dis[i]=sou[i];
+		while(S.empty()==false) 
+		{
+			int x=S.top();
+			dis[x]='$';
+			S.pop();
+		}
+		printf("%s\n",sou);
+		printf("%s\n",dis);
+	}
+	return 0;
+}

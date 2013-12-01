@@ -1,0 +1,49 @@
+15 Aab3 7
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+int main() 
+{
+	int a,b,i,str,n,sum,dx;
+	char p[3],q[3],m[40];
+	while(scanf("%s%s%s",&p,&m,&q)!=EOF )
+	{
+		if(p[1]=='\0') 	a=p[0]-'0';
+		else a=(p[0]-'0')*10+p[1]-'0';
+		if(q[1]=='\0') 	b=q[0]-'0';
+		else b=(q[0]-'0')*10+q[1]-'0';
+
+		n=strlen(m);i=0;
+		while(m[i]=='0')
+			i++;
+		str=i;sum=0;dx=1;
+		for(i=n-1;i>=str;i--)
+		{
+			if(m[i]>='0'&& m[i]<='9')
+				sum=sum+(m[i]-'0')*dx;
+			else if(m[i]>='a'&& m[i]<='f')
+				sum=sum+((m[i]-'a')+10)*dx;
+			else if(m[i]>='A'&& m[i]<='F')
+				sum=sum+((m[i]-'A')+10)*dx;
+			else ;
+			dx=dx*a;
+		}
+		i=0;
+		while(sum/b!=0)
+		{
+			if(sum%b>9) m[i]=(sum%b-10)+'A';
+			else m[i]=sum%b+'0';
+			sum=sum/b;
+			i++;
+		}
+		if(sum%b>9) m[i]=(sum%b-10)+'A';
+		else m[i]=sum%b+'0';
+		n=i;
+		for(i=n;i>=0;i--)
+			printf("%c",m[i]);
+		printf("\n");
+	}
+
+	return 0;
+}

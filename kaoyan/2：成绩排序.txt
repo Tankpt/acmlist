@@ -1,0 +1,23 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+using namespace std;
+
+struct Student
+{
+	char name[100];
+	int age;
+	int score;
+};
+int main()
+{
+	Student student;
+	int n;
+	while(scanf("%d",&n)!=EOF)
+	{
+		for(i=0;i<n;i++)
+			scanf("%s%d%d",&student.name,&student.age,&student.score);
+
+	}
+	return 0;
+}

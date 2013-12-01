@@ -1,0 +1,42 @@
+1990 9 20
+2000 5 1
+
+#include<stdio.h>
+#include<stdlib.h>
+
+#define Isyear(x) x % 100!=0 && x % 4==0 || x%400==0 ? 1: 0
+int dat[13][2]={
+	0,0,31,31,28,29,31,31,30,30,31,31,30,30,
+	31,31,31,31,30,30,31,31,30,30,31,31,
+};
+struct Date{
+	int year;
+	int month;
+	int day;
+	void nextday()
+	{
+		day++;
+		if(day>dat[month][Isyear(year)])
+		{ day=1;month++;
+		}
+	}
+};
+int buf[13][32];
+int main() 
+{
+	int Y,M,D,sum;
+	Date date; 
+	while(scanf("%d %d %d",&Y,&M,&D)!=EOF)
+	{
+		date.year=Y;date.month=1;date.day=1;
+		sum=1;
+		while(date.month!=13)
+		{
+			buf[date.month][date.day]=sum;
+			date.nextday();
+			sum++;
+		}
+		printf("%d\n",buf[M][D]);
+	}
+	return 0;
+}

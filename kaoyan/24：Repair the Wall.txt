@@ -1,0 +1,43 @@
+
+
+5 3
+3 2 1
+5 2
+2 1
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<algorithm>
+using namespace std;
+bool cmp(int a,int b){
+	return a>b;
+};
+int main() 
+{
+	int n,i,l,sum;
+	while(scanf("%d %d",&l,&n)!=EOF)
+	{
+		int *num=(int *)malloc(sizeof(int)*n);
+		for(i=0;i<n;i++)
+			scanf("%d",&num[i]);
+		sort(num,num+n,cmp);
+		sum=0;i=0;
+		while(l>0 && i<n)
+		{
+			if(num[i]>l) 
+			{
+				l=0;sum=sum+1;
+				break;
+			}
+			else
+			{
+				l=l-num[i];sum=sum+1;
+			}
+			i++;
+		}
+		if(l==0) printf("%d\n",sum);
+		else printf("impossible\n");
+		free(num);
+	}
+	return 0;
+}

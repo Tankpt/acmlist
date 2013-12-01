@@ -1,0 +1,105 @@
+6/2+3+3*4
+//跟27一样
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include<stack>
+using namespace std;
+stack<double> p;
+stack<char> q;
+int mat[][4]={
+ //	+ _ * /
+	0,0,0,0,//+
+	0,0,0,0,//-
+	1,1,0,0,//*
+	1,1,0,0,// /
+};
+int trans(char s)
+{
+	if(s=='+') return 0;
+	else if(s=='-') return 1;
+	else if(s=='*') return 2;
+	else return 3;
+}
+int you( char a,char b)//high retutn 1
+{
+	int i,j;
+	i=trans(a);j=trans(b);
+	return mat[i][j];
+}// a>b return 1(a now b pre)
+double calculate(double a,double b,char op)
+{
+	if(op=='+')
+		return a+b;
+	else if(op=='-')
+		return a-b;
+	else if(op=='/')
+		return a/b;
+	else return a*b;
+}
+int main() 
+{
+	char num[200],op;
+	int i,sum,n;
+	double a,b,tmp,k;
+	while(scanf("%s",&num)!=EOF)
+	{
+		i=0;sum=0;
+		n=strlen(num);
+		if(n==1 && num[0]=='0') break;
+		while(i<n)
+		{
+			if(num[i]>='0'&&num[i]<='9')
+			{
+				sum=sum*10+num[i]-'0';
+			}
+			else if(num[i]==' ') ;
+			else //op
+			{
+				p.push(sum);sum=0;
+				if(q.empty()==true) q.push(num[i]);
+				else
+				{
+					op=q.top();
+					if(you(num[i],op)==1)//当前优先级高
+						q.push(num[i]);
+					else//low  //push num and op calculate
+					{
+						q.pop();
+						b=p.top();p.pop();
+						a=p.top();p.pop();
+						tmp=calculate(a,b,op);
+						p.push(tmp);
+						if(q.empty()==false)
+						{
+							op=q.top();
+							if(you(num[i],op)==0)//num[i] < op
+							{
+								q.pop();
+								b=p.top();p.pop();
+								a=p.top();p.pop();
+								tmp=calculate(a,b,op);
+								p.push(tmp);
+							}
+						}
+						q.push(num[i]);
+					}
+				}
+			}
+		i++;
+		}
+		p.push(sum);
+		while(q.empty()==false)
+		{
+			op=q.top();q.pop();
+			b=p.top();p.pop();
+			a=p.top();p.pop();
+			tmp=calculate(a,b,op);
+			p.push(tmp);
+		}
+		tmp=p.top();
+		p.pop();
+		printf("%.0lf\n",tmp);
+	}
+	return 0;
+}

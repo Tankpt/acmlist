@@ -1,0 +1,33 @@
+4
+1 2 3 4
+2
+//运气好ac了、、其实有问题h=int(log(8)/log(2))+1;结果为3
+#include<stdio.h>
+#include<stdlib.h>
+#include<math.h>
+int num[1000];
+int main() 
+{
+	int n,i,d,h,str,end;
+	while(scanf("%d",&n)!=EOF)
+	{
+		for(i=0;i<n;i++)
+			scanf("%d",&num[i]);
+		scanf("%d",&d);
+		h=int(log(n)/log(2))+1;
+		if(d>h) printf("EMPTY\n");
+		else
+		{
+			str=pow(2,d-1)-1;
+			if(n<pow(2,d)) end=n-1;
+			else end=pow(2,d)-2;
+			for(i=str;i<=end;i++)
+			{
+				if(i!=end)
+					printf("%d ",num[i]);
+				else printf("%d\n",num[i]);
+			}
+		}
+	}
+	return 0;
+}

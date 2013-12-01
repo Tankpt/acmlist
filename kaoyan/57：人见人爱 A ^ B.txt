@@ -1,0 +1,23 @@
+#include<stdio.h>
+#include<math.h>
+#include <iostream>
+using namespace std;
+int main() 
+{
+	int a,b,i,c;
+	while(scanf("%d%d",&a,&b)!=EOF )
+	{
+		if(a==0 && b==0) break;
+		c=1;
+		a=a%1000;
+		for(i=0;i<b;i++)
+		{
+			c=a*c;
+			c=c%1000;
+		}
+		printf("%d\n",c);
+	}
+	return 0;
+}
+
+

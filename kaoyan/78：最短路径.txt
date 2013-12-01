@@ -1,0 +1,160 @@
+/*
+样例输入：
+4 2
+1 2
+0 1
+样例输出：
+8
+9
+11
+*/
+
+
+9 9
+0 1
+1 2
+0 2
+0 3
+0 4
+0 5
+0 6
+0 7
+0 8
+
+
+
+#include <stdio.h>
+#include <vector>
+#define N 100
+using namespace std;
+struct biginter{
+	int dig[100];
+	int size;
+	void init(){
+		for(int i=0;i<N;i++) dig[i]=0;
+		size=0;
+	}
+	bool operator  > ( biginter &A) const{
+			int j;
+			if(size>A.size) return true;
+			else if(size<A.size) return false;
+			else{
+				 j=size-1;
+				 while(j>=0) {
+					 if(dig[j]>A.dig[j]) return true;
+					 else if(dig[j]<A.dig[j]) return false;
+					 else j--;
+				 }
+				 return false;
+			 }
+		}
+	biginter operator + ( biginter &A)const {
+		biginter ret;
+		int i,j,cin;
+		cin=i=j=0;ret.size=0;
+		while(i<size && j<A.size){
+			ret.dig[ret.size]=dig[i]+A.dig[j]+cin;
+			cin=ret.dig[ret.size]/10000;
+			ret.dig[ret.size]=ret.dig[ret.size]%10000;
+			i++;j++;ret.size++;
+		}
+		if(i==size &&j<A.size){
+			while(j<A.size){
+				ret.dig[ret.size]=A.dig[j]+cin;
+				cin=ret.dig[ret.size]/10000;
+				ret.dig[ret.size]=ret.dig[ret.size]%10000;
+				j++;ret.size++;
+			}
+		}
+		if(i<size && j==A.size){
+			while(i<size){
+				ret.dig[ret.size]=dig[i]+cin;
+				cin=ret.dig[ret.size]/10000;
+				ret.dig[ret.size]=ret.dig[ret.size]%10000;
+				i++;ret.size++;
+			}
+		}
+		if(cin!=0){
+			ret.dig[ret.size]=cin;
+			ret.size++;
+		}
+		return ret;
+	}
+	biginter operator * ( int x) {
+		biginter ret;
+		int j,carry=0,tmp;
+		ret.init();
+		for(j=0;j<size;j++){
+			tmp=dig[j]*x+carry;
+			ret.dig[ret.size++]=tmp%10000;
+			carry=tmp/10000;
+		}
+		if(carry!=0)
+			ret.dig[ret.size++]=carry;
+		return ret;
+	}
+};
+struct E{
+	int next;
+	biginter cost;
+};
+vector<E> edge[N]; 
+bool mark[N];
+biginter dis[N];
+int main() 
+{
+	int n,m,k,i,j,newp;
+	int a,b;
+	int p;
+	biginter c,max;
+	while( scanf("%d%d",&n,&m)!=EOF){
+		if(m==0 && n==0) break;
+		for(i=0;i<n;i++)
+			edge[i].clear();
+		for(k=0;k<m;k++){
+			scanf("%d%d",&a,&b);
+			E tmp;
+			tmp.cost.size=1;tmp.cost.dig[0]=1;//init----------------------------------
+			for(i=0;i<k;i++){
+				tmp.cost=tmp.cost*2;
+			}
+			tmp.next=b;edge[a].push_back(tmp);
+			tmp.next=a;edge[b].push_back(tmp);
+		}
+		for(i=0;i<n;i++){
+			dis[i].size=1;dis[i].dig[0]=-1;
+			mark[i]=false;
+		}
+		newp=0;
+		dis[newp].dig[0]=0;
+		mark[newp]=true;
+		for(i=1;i<n;i++){//运行n-1次
+			for(j=0;j<edge[newp].size();j++){
+				p=edge[newp][j].next;
+				c=edge[newp][j].cost;
+				max=dis[newp]+c;
+				if(mark[p]==true) continue;
+				if(dis[p].dig[0]==-1 || dis[p] >max ){
+						dis[p]=dis[newp]+c;
+				}
+			}
+			max.size=100;
+			max.dig[99]=100;
+			for(j=0;j<n;j++){
+				if(mark[j]==true || dis[j].dig[0]==-1) continue;
+				if(max > dis[j]){
+					newp=j;
+					max=dis[j];
+				}
+			}
+			mark[newp]=true;
+		}
+		for(i=1;i<n;i++){
+			j=dis[i].dig[0];
+			if(dis[i].size>1)
+				j=dis[i].dig[1]%10*10000+j;
+			printf("%d\n",j);
+		}
+	}
+	return 0;
+}

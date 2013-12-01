@@ -1,0 +1,30 @@
+//////////////////////////////////////关键方法还没做
+
+//////////////////////////////////////////////////////////////////////
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+int main() 
+{
+	int a,b,i,max,min;
+	while(scanf("%d%d",&a,&b)!=EOF )
+	{	
+		if(a>b) 
+		{
+			max=a;min=b;
+		}
+		else
+		{
+			max=b;min=a;
+		}
+		for(i=max;;i++)
+		{
+			if(i%max==0 && i%min==0)
+				break;
+		}
+		printf("%d\n",i);
+	}
+	return 0;
+}
+
+

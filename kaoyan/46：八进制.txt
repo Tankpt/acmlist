@@ -1,0 +1,21 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+int main() 
+{
+	int i,n[20],j,a;
+	while(scanf("%d",&a)!=EOF )
+	{
+		i=0;
+		while(a/8!=0)
+		{
+			n[i]=a%8;
+			a=a/8;i++;
+		}
+		n[i]=a%8;
+		for(j=i;j>=0;j--)
+			printf("%d",n[j]);
+		printf("\n");
+	}
+	return 0;
+}

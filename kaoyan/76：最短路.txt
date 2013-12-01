@@ -1,0 +1,37 @@
+2 1
+1 2 3
+3 3
+1 2 5
+2 3 5
+3 1 2
+
+#include <stdio.h>
+int dis[101][101];
+int main() 
+{
+	int n,m,i,j,k;
+	int a,b,c;
+	while( scanf("%d%d",&n,&m)!=EOF )
+	{
+		if(m==0 && n==0) break;
+		for(i=1;i<=n;i++)
+			for(j=1;j<=n;j++)
+				dis[i][j]=-1;
+		while(m>0)
+		{
+			scanf("%d%d%d",&a,&b,&c);
+			dis[a][b]=dis[b][a]=c;
+			m--;
+		}
+		for(k=1;k<=n;k++)
+			for(i=1;i<=n;i++)
+				for(j=1;j<=n;j++)
+				{
+					if(dis[i][k]==-1 || dis[k][j]==-1) continue;
+					if(dis[i][j]==-1 || dis[i][k]+dis[k][j]<dis[i][j])
+						dis[i][j]=dis[i][k]+dis[k][j];
+				}
+		printf("%d\n",dis[1][n]);
+	}
+	return 0;
+}
